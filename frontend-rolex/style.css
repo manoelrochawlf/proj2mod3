@@ -1,0 +1,273 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Poppins:ital,wght@1,300&display=swap');
+
+body{
+    background-color: white;
+    color: black;
+}
+
+* {
+    margin: 0%;
+    padding: 0%;
+    font-family: Poppins, Arial, Helvetica, sans-serif;
+}
+
+header{
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+    background-color: #006039;
+    color: white;
+
+}
+
+.logo-rolex {
+    display: flex;
+    width: 150px;
+    height: 150px;
+}
+
+.all-rlx {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 50px;
+    flex-wrap: wrap;
+   
+}
+
+.default-button{
+  background-color: #006039;
+  color: white;
+  border-radius: 0.8rem;
+}
+
+.button-modal-create {
+
+  padding-top: 15px;
+}
+
+
+section.cards div.card{
+    position: relative;
+}
+
+.textimg {
+
+    position: absolute;
+    left: 10px;
+    bottom: 25px;
+    width: 15rem;
+    padding: 5px;
+    color: #DCDCDC;
+
+}
+
+section.cards div.card img {
+    width: 300px;
+    height: 300px;
+}
+
+
+.as {
+    display: flex;
+    justify-content: center;
+    color: #006039;
+}
+
+.getwatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+  color: #006039;
+  margin-left: 15px;  
+}
+
+#idRlx {
+  width:250px;
+  border-radius: 0.8rem;
+  color: #006039;
+  border: 3px #006039 solid;
+}
+
+#btn-watch-id {
+  background-color: #006039;
+  color: white;
+  border-radius: 0.3rem;
+}
+
+.btn-edit {
+
+  width: 60px;
+  background-color: transparent;
+  border: 1px solid #006039;
+  border-radius: 1rem;
+  color: #006039;
+  padding: 3px;
+}
+
+.btn-delete {
+
+  width: 60px;
+  background-color: transparent;
+  border: 1px solid #006039;
+  border-radius: 1rem;
+  color: #006039;
+  padding: 3px;
+}
+
+
+/* ALTERAR DEPOIS */
+.modal-overlay{
+  background-color: #00000050;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+}
+
+.modal {
+  margin: 1rem;
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  min-height: 300px;
+  background-color: #006039;
+  ;
+  border-radius: .8rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.modal-header{
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+  background-color: white;
+  color: #a37e2c;
+  
+}
+
+.img-header {
+
+    display: flex;
+    justify-content: center;
+    width: 90px;
+    height: 90px;
+
+}
+
+.close-modal{
+  text-decoration: none;
+  color: #000000;
+  font-size: 1.5rem;
+  transform: scale(0.7);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.close-modal:hover{
+  transform: scale(1);
+}
+
+.modal-body{
+  padding: .5rem 1rem;
+
+}
+
+.modal-body div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-body div input, textarea{
+  width: 100%;
+  padding: .5rem;
+  font-size: .8rem;
+  outline: none;
+  border: solid 1px #ccc;
+  margin-bottom: .4rem;
+  border-radius: .3rem;
+}
+
+.modal-body div button {
+  padding: .5rem;
+  width: 30%;
+  font-size: 1rem;
+  background-color: transparent;
+  color: #a37e2c;
+  border: solid 1px #a37e2c;
+  border-radius: .3rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.modal-body div button:hover{
+  background-color: #a37e2c;
+  color: white;
+}
+
+.button-modal-create{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-body-delete{
+  display: flex;
+  flex-wrap: wrap;
+}
+.modal-body-delete p{
+  width: 100%;
+  padding: 2rem;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.btns_delete{
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  
+}
+
+.btn_delete{
+  background-color: transparent;
+  padding: .5rem;
+  font-size: 1.2rem;
+  border-radius: .5rem;
+  width: 30%;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn_delete_no{
+  color: #ff0000;
+  border: solid 1px #ff0000;
+}
+
+.btn_delete_no:hover{
+  background-color: #ff0000;
+  color: #fff;
+}
+
+.btn_delete_yes{
+  color: #00b309;
+  border: solid 1px #00b309;
+}
+
+.btn_delete_yes:hover{
+  background-color: #00b309;
+  color: #fff;
+}

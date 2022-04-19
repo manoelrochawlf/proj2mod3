@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Rolex</title>
+</head>
+<body>
+
+    <header>
+        <nav class="logo-rolex">
+            <img src="/assets/img/rolexlogo1.png" alt="Logo Rolex">
+        </nav>
+    </header>
+
+    <!--    A L T E R A R    E S S E   T R E C H O     -->
+    <section class="button-modal-create">
+        <button type="button" class="default-button" onclick="abrirModal()">Cadastrar Rolex</button>
+    </section>
+
+    <section class="modal-overlay" id="overlay">
+
+        <div class="modal">
+
+            <div class="modal-header">
+                <div class="img-header">
+                    <img src="./assets/img/rolexlogo.png" alt="">
+                </div>
+                <h2 id="mudar-header">Adicionar Relógio</h2>
+                <a onclick="fecharModalCadastro()" class="close-modal">x</a>
+            </div>
+
+            <div class="modal-body">
+                <div>
+                    <input type="hidden" id="id" >
+                    <input type="text" name="name" id="name" placeholder="Modelo do Rolex">
+                    <input type="number" name="price" id="price" placeholder="Preço do Rolex">
+                    <textarea type="text" name="descricao" id="description" placeholder="Descrição do Rolex"
+                        rows="5"></textarea>
+                    <input type="text" name="specifications" id="specifications" placeholder="Especificações do Rolex">
+                    <input type="text" name="img" id="img" placeholder="Link para imagem do modelo">
+                    <button id="btn-modal" onclick="createRolex()">Cadastrar</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--    A L T E R A R    E S S E   T R E C H O     -->
+    
+    <div class="getwatch">
+        <h2>Escolher relógio</h2>
+        <div id="getwatch-input">
+            <input type="number" id="idRlx" placeholder="Digite o ID do Relogio" />
+            <button id="btn-watch-id" onclick="getRlxId()">Ok</button>
+        </div>
+        <div id="idRolex">
+
+        </div>
+    </div>
+
+    <h2 class="as">Modelos disponíveis:</h2>
+
+    <main class="all-rlx" id="allrlx">
+    </main>
+
+    <section class="modal-overlay" id="overlay-delete">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="title-header-modal">Confirmação de deleção</h2>
+                <a onclick="fecharModalDelete()" class="close-modal">x</a>
+            </div>
+            <div class="modal-body-delete">
+                <p>Deseja realmente apagar esse Relógio?</p>
+                <div class="btns_delete">
+                    <button class="btn_delete_no btn_delete" onclick="fecharModalDelete()">Não</button>
+                    <button class="btn_delete_yes btn_delete">Sim</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+    <script src="script.js"></script>
+</body>
+</html>
