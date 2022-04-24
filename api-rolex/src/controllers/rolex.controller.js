@@ -1,17 +1,28 @@
 const rolexService = require('../services/rolex.service');
+const mongoose = require('mongoose');
 
-const allRolexController = (req, res) => {
-  const allRlx = rolexService.allRolexService();
+const allRolexController = async (req, res) => {
+  const allRlx = await rolexService.allRolexService();
   res.send(allRlx);
-};
+}
 
-const rlxIdController = (req, res) => {
+const rlxIdController = async (req, res) => {
+
   const idParam = req.params.id;
-  if (!idParam) {
-    return res.status(404).send({ message: "Relógio indisponível!" })
+
+  if (!mongoose.Types.ObjectId.isValid(idParam)) {
+    res
+      .status(400)
+      .send({ message: 'ID inválido!' });
+    return;
   }
-  const getRlx = rolexService.rlxIdService(idParam);
+
+  const getRlx = await rolexService.rlxIdService(idParam);
+  if (!getRlx) {
+    return res.status(404).send({ message: 'Relógio não encontradp!' });
+  }
   res.send(getRlx);
+
 };
 
 const createRolexController = (req, res) => {
@@ -28,9 +39,9 @@ const createRolexController = (req, res) => {
     }
     const newRlx = rolexService.createRolexService(rlx);
     res.send(newRlx);
-  };
+};
   
-  const updateRolexController = (req, res) => {
+const updateRolexController = (req, res) => {
     const idParam = +req.params.id;
     const rolexEdit = req.body;
 
@@ -45,9 +56,9 @@ const createRolexController = (req, res) => {
     }
     const updateRolex = rolexService.updateRolexService(idParam, rolexEdit);
     res.send(updateRolex);
-  };
+};
   
-  const deleteRolexController = (req, res) => {
+const deleteRolexController = (req, res) => {
     const idParam = Number(req.params.id);
 
     if (!idParam) {
@@ -55,7 +66,7 @@ const createRolexController = (req, res) => {
     }
     rolexService.deleteRolexService(idParam);
     res.send({ message: 'Relógio deletado com sucesso!' });
-  };
+};
 
 module.exports = {
     allRolexController,
