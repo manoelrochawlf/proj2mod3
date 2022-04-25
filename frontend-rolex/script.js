@@ -1,4 +1,5 @@
 const baseUrl = "http://localhost:3000/rolex";
+const msgAlert = document.querySelector(".msg-alert");
 
 async function getAllRolex() {
   const response = await fetch(`${baseUrl}/all-rolex`);
@@ -8,7 +9,7 @@ async function getAllRolex() {
     document.getElementById("allrlx").insertAdjacentHTML(
       "beforeend",
       `
-      <section class="cards" id="cards_${rlx.id}">
+      <section class="cards" id="cards_'${rlx._id}'">
 
         <div class="card">
               <img src=${rlx.img} alt="">
@@ -17,10 +18,10 @@ async function getAllRolex() {
                 <p class="descricao">${rlx.description}</p>      
               </div>
               <section class="btn-container"> 
-                    <button class="btn-edit" onclick="abrirModal(${rlx.id})">
+                    <button class="btn-edit" onclick="abrirModal('${rlx._id}')">
                       Editar
                      </button>
-                    <button class="btn-delete" onclick="abrirModalDelete(${rlx.id})">
+                    <button class="btn-delete" onclick="abrirModalDelete('${rlx._id}')">
                       Deletar
                     </button>
                 </section>        
@@ -35,15 +36,34 @@ getAllRolex();
 
 const getRlxId = async () => {
 
-  const id = document.getElementById("idRlx").value;
+  const id = document.querySelector("#idRlx").value;
+  console.log(id);
 
-  const response = await fetch(`${baseUrl}/rlx/${id}`);
+  if (id == "") {
+
+    localStorage.setItem("message", "Digite um ID para pesquisar!");
+    localStorage.setItem("type", "danger");
+  
+    showMessageAlert();
+  
+    return;
+  }
+
+  const response = await fetch(`${baseUrl}/one-rolex/${id}`);
   const rolexId = await response.json();
+ 
+  if (rolexId.message != undefined) {
+    localStorage.setItem("message", rolexId.message);
+    localStorage.setItem("type", "danger");
+    showMessageAlert();
+    return;
+  }
 
 
+ 
   const chosenWatch = document.getElementById("allrlx");
 
-  chosenWatch.innerHTML = `<section class="cards" id="cards_${rolexId.id}>
+  chosenWatch.innerHTML = `<section class="cards" id="cards_'${rolexId._id}'>
 
   <div class="card">
               <img src=${rolexId.img} alt="">
@@ -56,19 +76,19 @@ const getRlxId = async () => {
 
 };
 
-async function abrirModal(id = null) {
+async function abrirModal(id = "") {
 
-  if(id != null) {
+  if(id != "") {
     document.querySelector("#mudar-header").innerText = "Editar Relógio";
     document.querySelector("#btn-modal").innerText = "Editar";
 
-    const response = await fetch(`${baseUrl}/rlx/${id}`);
+    const response = await fetch(`${baseUrl}/one-rolex/${id}`);
     const rlx = await response.json();
 
     document.querySelector("#name").value = rlx.name;
     document.querySelector("#description").value = rlx.description;
     document.querySelector("#img").value = rlx.img;
-    document.querySelector("#id").value = rlx.id;
+    document.querySelector("#id").value = rlx._id;
   } else {
     document.querySelector("#mudar-header").innerText = "Cadastrar Relógio";
     document.querySelector("#btn-modal").innerText = "Cadastrar";
@@ -78,7 +98,7 @@ document.querySelector(".modal-overlay").style.display = "flex";
 
 }
 
-function fecharModalCadastro() {
+function fecharModal() {
   document.querySelector(".modal-overlay").style.display = "none";
   document.querySelector("#name").value = "";
   document.querySelector("#price").value = 0;
@@ -87,7 +107,8 @@ function fecharModalCadastro() {
   document.querySelector("#img").value = "";
 }
 
-async function createRolex() {
+async function submitRolex() {
+
   const id = document.querySelector("#id").value;
   const name = document.querySelector("#name").value;
   const description = document.querySelector("#description").value;
@@ -100,9 +121,9 @@ async function createRolex() {
     img,
   };
 
-  const editAtivado = id > 0;
+  const editAtivado = id != "";
 
-  const endpoint = baseUrl + (editAtivado ? `/update/${id}` : '/create');
+  const endpoint = baseUrl + (editAtivado ? `/update-rolex/${id}` : '/create-rolex');
 
   const response = await fetch(endpoint, {
     method: editAtivado ? "put" : "post",
@@ -114,39 +135,25 @@ async function createRolex() {
   });
 
   const newRolex = await response.json();
-
-
-  const html =  
-  `
-  <section class="cards" id="cards_${newRolex.id}">
-
-    <div class="card">
-          <img src=${newRolex.img} alt="">
-          <div class="textimg">
-            <p class="descricao">${newRolex.name}</p>
-            <p class="descricao">${newRolex.description}</p>      
-          </div>
-          <section class="btn-container"> 
-                <button class="btn-edit" onclick="abrirModal(${newRolex.id})">
-                  Editar
-                 </button>
-                 <button class="btn-delete" onclick="abrirModalDelete(${newRolex.id})">
-                  Deletar
-                </button>
-            </section>        
-    </div>        
   
-  </section>`;
+  if (newRolex.message != undefined) {
+    localStorage.setItem("message", newRolex.message);
+    localStorage.setItem("type", "danger");
+    showMessageAlert();
+    return;
+  }
 
+  if (editAtivado) {
+    localStorage.setItem("message", "Relógio atualizado com sucesso");
+    localStorage.setItem("type", "success");
+  } else {
+    localStorage.setItem("message", "Relógio criado com sucesso");
+    localStorage.setItem("type", "success");
+  }
 
-if (editAtivado) {
-  document.getElementById(`cards_${id}`).outerHTML = html;
-} else {
-  document.getElementById("allrlx").insertAdjacentHTML("beforeend", html);
-}
+  document.location.reload(true);
 
-fecharModalCadastro();
-
+fecharModal();
 
 };
 
@@ -165,7 +172,7 @@ async function fecharModalDelete(id) {
 }
 
 const deleteRolex = async (id) => {
-  const response = await fetch(`${baseUrl}/delete/${id}`, {
+  const response = await fetch(`${baseUrl}/delete-rolex/${id}`, {
     method: "delete",
     headers: {
       "Content-Type": "application/json",
@@ -175,14 +182,29 @@ const deleteRolex = async (id) => {
 
 
 const result = await response.json();
-  alert(result.message)
-  fecharModalDelete();
-  
-  document.getElementById("allrlx").innerHTML = "";
 
-  getAllRolex();
- 
-  
+localStorage.setItem("message", result.message);
+localStorage.setItem("type", "success");
+
+document.location.reload(true);
+
+  fecharModalDelete();
 };
+
+function closeMessageAlert() {
+  setTimeout(function () {
+    msgAlert.innerText = "";
+    msgAlert.classList.remove(localStorage.getItem("type"));
+    localStorage.clear();
+  }, 3000);
+}
+
+function showMessageAlert() {
+  msgAlert.innerText = localStorage.getItem("message");
+  msgAlert.classList.add(localStorage.getItem("type"));
+  closeMessageAlert();
+}
+
+showMessageAlert();
 
 

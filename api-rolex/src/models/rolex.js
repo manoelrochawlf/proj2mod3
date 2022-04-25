@@ -4,21 +4,21 @@ const rolexSchema = new mongoose.Schema({
 
     name: {
       type: String, 
-      required: true 
+      required: true, 
     },
 
     description: { 
       type: String, 
-      required: true
+      required: true,
     },
 
     img: {
     type: String, 
-    required: true
+    required: true,
     },
 
   });
 
-  const rolexCollection = mongoose.model('rolex', rolexSchema);
+  const Rolex = mongoose.model('rolexes', rolexSchema);
 
- module.exports = rolexCollection;
+ module.exports = Rolex;

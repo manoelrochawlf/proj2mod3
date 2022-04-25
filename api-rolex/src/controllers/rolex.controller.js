@@ -3,6 +3,13 @@ const mongoose = require('mongoose');
 
 const allRolexController = async (req, res) => {
   const allRlx = await rolexService.allRolexService();
+
+  if (allRlx.length == 0) {
+    return res
+      .status(404)
+      .send({ message: 'Não existe nenhum relógio cadastrad!' });
+  }
+
   res.send(allRlx);
 }
 
@@ -10,61 +17,30 @@ const rlxIdController = async (req, res) => {
 
   const idParam = req.params.id;
 
-  if (!mongoose.Types.ObjectId.isValid(idParam)) {
-    res
-      .status(400)
-      .send({ message: 'ID inválido!' });
-    return;
+  const chosenRolex = await rolexService.rlxIdService(idParam);
+  if (!chosenRolex) {
+    return res.status(404).send({ message: 'Relógio não encontrado!' });
   }
+  res.send(chosenRolex);
+}
 
-  const getRlx = await rolexService.rlxIdService(idParam);
-  if (!getRlx) {
-    return res.status(404).send({ message: 'Relógio não encontradp!' });
-  }
-  res.send(getRlx);
-
-};
-
-const createRolexController = (req, res) => {
+const createRolexController = async (req, res) => {
     const rlx = req.body;
-    if (
-      !rlx ||
-      !rlx.name ||
-      !rlx.description ||
-      !rlx.specifications||
-      !rlx.price||
-      !rlx.img
-    ) {
-      return res.status(400).send({mensagem:'Prencha todos os dados para adicionar um relógio novo!'});
-    }
-    const newRlx = rolexService.createRolexService(rlx);
-    res.send(newRlx);
+    const newRlx = await rolexService.createRolexService(rlx);
+    res.status(201).send(newRlx);
 };
   
-const updateRolexController = (req, res) => {
-    const idParam = +req.params.id;
+const updateRolexController = async (req, res) => {
+    const idParam = req.params.id;
     const rolexEdit = req.body;
+    const updateRolex = await rolexService.updateRolexService(idParam, rolexEdit);
 
-    if (!idParam) {
-      return res.status(404).send({ message: "Relógio indisponível!" })
-    }
-
-    if (!rolexEdit || !rolexEdit.name || !rolexEdit.description || !rolexEdit.img  || !rolexEdit.price || !rolexEdit.specifications) {
-
-
-      return res.status(400).send({ message: "Preencha todos os dados para editar o relógio!" });
-    }
-    const updateRolex = rolexService.updateRolexService(idParam, rolexEdit);
     res.send(updateRolex);
 };
   
-const deleteRolexController = (req, res) => {
-    const idParam = Number(req.params.id);
-
-    if (!idParam) {
-      return res.status(404).send({ message: "Relógio indisponível!" })
-    }
-    rolexService.deleteRolexService(idParam);
+const deleteRolexController = async (req, res) => {
+  const idParam = req.params.id;
+  await rolexService.deleteRolexService(idParam);
     res.send({ message: 'Relógio deletado com sucesso!' });
 };
 

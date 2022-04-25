@@ -15,9 +15,12 @@
         </nav>
     </header>
 
-    <!--    A L T E R A R    E S S E   T R E C H O     -->
-    <section class="button-modal-create">
-        <button type="button" class="default-button" onclick="abrirModal()">Cadastrar Rolex</button>
+    <section class="options">
+        <span class="msg-alert"></span>
+        <div class="btns-list-cad">
+            <a href="/" class="default-button list-all">Listar todos os relógios</a>
+            <button type="button" class="default-button" onclick="abrirModal()">Cadastrar Rolex</button>
+        </div>
     </section>
 
     <section class="modal-overlay" id="overlay">
@@ -29,19 +32,17 @@
                     <img src="./assets/img/rolexlogo.png" alt="">
                 </div>
                 <h2 id="mudar-header">Adicionar Relógio</h2>
-                <a onclick="fecharModalCadastro()" class="close-modal">x</a>
+                <a onclick="fecharModal()" class="close-modal">x</a>
             </div>
 
             <div class="modal-body">
                 <div>
                     <input type="hidden" id="id" >
                     <input type="text" name="name" id="name" placeholder="Modelo do Rolex">
-                    <input type="number" name="price" id="price" placeholder="Preço do Rolex">
                     <textarea type="text" name="descricao" id="description" placeholder="Descrição do Rolex"
                         rows="5"></textarea>
-                    <input type="text" name="specifications" id="specifications" placeholder="Especificações do Rolex">
                     <input type="text" name="img" id="img" placeholder="Link para imagem do modelo">
-                    <button id="btn-modal" onclick="createRolex()">Cadastrar</button>
+                    <button id="btn-modal" onclick="submitRolex()">Cadastrar</button>
                 </div>
             </div>
         </div>
@@ -51,7 +52,7 @@
     <div class="getwatch">
         <h2>Escolher relógio</h2>
         <div id="getwatch-input">
-            <input type="number" id="idRlx" placeholder="Digite o ID do Relogio" />
+            <input type="text" id="idRlx" placeholder="Digite o ID do Relogio" />
             <button id="btn-watch-id" onclick="getRlxId()">Ok</button>
         </div>
         <div id="idRolex">

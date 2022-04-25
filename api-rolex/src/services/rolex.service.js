@@ -11,23 +11,18 @@ const rlxIdService = async (id) => {
   return rolexId
 };
 
-const createRolexService = (newRlx) => {
-    const newId = rolex.length + 1;
-    newRlx.id = newId;
-    rolex.push(newRlx);
-    return newRlx;
+const createRolexService = async (newRlx) => {
+    const rolexCreate = await Rolex.create(newRlx)
+    return rolexCreate;
 };
 
-const updateRolexService = (id, rolexEdited) => {
-    rolexEdited['id'] = id;
-    const rolexIndex = rolex.findIndex((rlx) => rlx.id == id);
-    rolex[rolexIndex] = rolexEdited;
-    return rolexEdited;
+const updateRolexService = async (id, rolexEdited) => {
+    const rolexUpdate = await Rolex.findByIdAndUpdate(id, rolexEdited);
+    return rolexUpdate;
 };
 
-const deleteRolexService = (id) => {
-    const rolexIndex = rolex.findIndex((rlx) => rlx.id == id);
-    return rolex.splice(rolexIndex, 1);
+const deleteRolexService = async (id) => {
+    return await Rolex.findByIdAndDelete(id);
 };
   
 module.exports = {
